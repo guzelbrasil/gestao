@@ -2,31 +2,37 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Sistema de Gestão</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Solicitações de Pedidos</title>
   <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="logo.png" type="image/png" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
   <header>
-    <h1>Sistema de Gestão</h1>
+    <img src="logo.png" alt="Logo Guzel" class="logo">
   </header>
 
-  <main>
-    <section id="fornecedores">
-      <h2>Fornecedores</h2>
-      <div class="card">
-        <p>Nenhum fornecedor cadastrado.</p>
-        <!-- Aqui você vai adicionar inputs ou tabelas futuramente -->
-      </div>
+  <main class="container">
+    <h2>Solicitações de Pedidos</h2>
+
+    <section id="lista-solicitacoes">
+      <!-- Solicitações aparecerão aqui -->
     </section>
 
-    <section id="solicitacoes">
-      <h2>Solicitações de Compra</h2>
-      <div class="card">
-        <p>Nenhuma solicitação registrada.</p>
-        <!-- Aqui entram suas futuras solicitações -->
-      </div>
-    </section>
+    <button class="add-btn" onclick="mostrarFormulario()">Nova Solicitação</button>
+
+    <form id="form-solicitacao" class="hidden">
+      <input type="text" placeholder="Descrição do item" id="descricao" required>
+      <input type="number" placeholder="Quantidade" id="quantidade" required>
+      <input type="date" placeholder="Data da Solicitação" id="data" required>
+      <input type="date" placeholder="Previsão de Entrega" id="previsao" required>
+      <select id="status">
+        <option value="Pendente">Pendente</option>
+        <option value="Entregue">Entregue</option>
+      </select>
+      <button type="submit" class="save-btn">Salvar</button>
+    </form>
   </main>
 
   <script src="script.js"></script>
