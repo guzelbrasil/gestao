@@ -1,6 +1,5 @@
-// Firebase Modular SDK
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getDatabase, ref, push, onValue, update } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+import { getDatabase, ref, push, onValue, update, remove } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAr8neQIrg-jfF9rxWdyqCkhsHMlMQA7jM",
@@ -22,8 +21,6 @@ const form = document.getElementById('form-solicitacao');
 
 window.mostrarFormulario = function () {
   form.classList.toggle('hidden');
-
-  // Ajusta aria-expanded do botão
   const btn = document.getElementById('btn-toggle-form');
   const expanded = btn.getAttribute('aria-expanded') === 'true';
   btn.setAttribute('aria-expanded', String(!expanded));
@@ -51,18 +48,21 @@ form.addEventListener('submit', e => {
   }
 
   const novaSolicitacao = { item, descricao, quantidade, data, previsao, status };
-
   push(ref(db, 'solicitacoes'), novaSolicitacao);
 
   form.reset();
   form.classList.add('hidden');
-  // Atualizar aria-expanded
-  const btn = document.getElementById('btn-toggle-form');
-  btn.setAttribute('aria-expanded', 'false');
+  document.getElementById('btn-toggle-form').setAttribute('aria-expanded', 'false');
 });
 
 function atualizarStatus(id, novoStatus) {
   update(ref(db, 'solicitacoes/' + id), { status: novoStatus });
+}
+
+function excluirSolicitacao(id) {
+  if (confirm('Tem certeza que deseja excluir esta solicitação?')) {
+    remove(ref(db, 'solicitacoes/' + id));
+  }
 }
 
 onValue(ref(db, 'solicitacoes'), snapshot => {
@@ -89,6 +89,7 @@ onValue(ref(db, 'solicitacoes'), snapshot => {
             <option value="Concluído" ${dados.status === 'Concluído' ? 'selected' : ''}>Concluído</option>
           </select>
         </label>
+        <button class="btn-excluir" onclick="excluirSolicitacao('${id}')">Excluir</button>
       `;
 
       const select = div.querySelector('.status-select');
@@ -106,3 +107,5 @@ onValue(ref(db, 'solicitacoes'), snapshot => {
     });
   }
 });
+
+window.excluirSolicitacao = excluirSolicitacao;

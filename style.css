@@ -1,197 +1,156 @@
-/* Reset básico */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
 body {
   font-family: 'Poppins', sans-serif;
-  background-color: #f9f9f9;
-  color: #222;
-  padding: 1rem;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  margin: 0;
+  padding: 0;
+  background: #f4f4f4;
+  color: #333;
 }
 
 header {
+  background: #1a1a1a;
+  color: white;
+  padding: 1rem;
   text-align: center;
-  margin-bottom: 2rem;
-  width: 100%;
-  max-width: 900px;
-}
-
-.logo {
-  height: 60px;
-  margin-bottom: 0.5rem;
-}
-
-h1 {
+  font-size: 1.5rem;
   font-weight: 600;
-  font-size: 1.8rem;
-  color: #2b2b2b;
 }
 
 main {
-  width: 100%;
-  max-width: 900px;
-}
-
-button#btn-toggle-form {
-  background-color: #278caa;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  padding: 0.7rem 1.2rem;
-  font-size: 1rem;
-  cursor: pointer;
-  margin-bottom: 1rem;
-  transition: background-color 0.3s ease;
-}
-
-button#btn-toggle-form:hover,
-button#btn-toggle-form:focus {
-  background-color: #1f6b83;
-  outline: none;
-}
-
-form#form-solicitacao {
-  background: white;
-  border-radius: 8px;
-  padding: 1rem 1.5rem;
-  margin-bottom: 2rem;
-  box-shadow: 0 2px 6px rgb(0 0 0 / 0.1);
-}
-
-.hidden {
-  display: none !important;
-}
-
-.form-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit,minmax(180px,1fr));
-  gap: 1rem 1.5rem;
-  align-items: center;
-  margin-bottom: 1rem;
-}
-
-label {
-  font-weight: 500;
-  font-size: 0.9rem;
-  color: #444;
-}
-
-input[type="text"],
-input[type="number"],
-input[type="date"],
-select {
-  padding: 0.5rem;
-  border: 1px solid #bbb;
-  border-radius: 5px;
-  font-size: 1rem;
-  width: 100%;
-  transition: border-color 0.3s ease;
-}
-
-input[type="text"]:focus,
-input[type="number"]:focus,
-input[type="date"]:focus,
-select:focus {
-  border-color: #278caa;
-  outline: none;
-}
-
-.btn-submit {
-  background-color: #278caa;
-  color: white;
-  border: none;
-  padding: 0.7rem 1.3rem;
-  font-size: 1rem;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  display: block;
+  padding: 1rem;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
-.btn-submit:hover,
-.btn-submit:focus {
-  background-color: #1e6d85;
-  outline: none;
-}
-
-.lista-section {
+.secao {
   margin-bottom: 2rem;
 }
 
-h2 {
-  color: #278caa;
+.secao h2 {
+  font-size: 1.2rem;
+  color: #1a1a1a;
   margin-bottom: 1rem;
-  font-weight: 600;
+  border-bottom: 2px solid #ccc;
+  padding-bottom: 0.5rem;
 }
 
 .grid-solicitacoes {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1rem 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1rem;
 }
 
 .solicitacao {
   background: white;
-  border-radius: 8px;
-  padding: 1rem 1.2rem;
-  box-shadow: 0 1px 5px rgb(0 0 0 / 0.07);
-  border: 1px solid transparent;
-  transition: border-color 0.3s ease;
-  word-wrap: break-word;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.2s;
 }
 
-.solicitacao:hover,
 .solicitacao:focus-within {
-  border-color: #1e6d85;
+  outline: 2px solid #666;
 }
 
-.solicitacao p {
-  margin-bottom: 0.4rem;
-  font-size: 0.95rem;
+.solicitacao:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
-.solicitacao strong {
-  color: #2b2b2b;
+label, select, input {
+  font-family: inherit;
 }
 
-.solicitacao label {
-  display: flex;
-  align-items: center;
-  font-weight: 600;
-  gap: 0.4rem;
+form {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+  background: white;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+form input, form select {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  width: 100%;
+}
+
+form button {
+  background: #158897;
+  color: white;
+  border: none;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  grid-column: span 3;
+}
+
+form button:hover {
+  background: #106672;
+}
+
+.botao-formulario {
+  display: block;
+  margin-bottom: 1rem;
+  background: #158897;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.2rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.botao-formulario:hover {
+  background: #106672;
+}
+
+.hidden {
+  display: none;
+}
+
+.status-select {
+  margin-top: 0.5rem;
+  width: 100%;
+  padding: 0.4rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 0.9rem;
+}
+
+/* ✅ Botão de exclusão */
+.btn-excluir {
+  background-color: #c0392b;
+  color: white;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.85rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
   margin-top: 0.6rem;
 }
 
-.solicitacao select {
-  padding: 0.3rem 0.5rem;
-  font-size: 0.9rem;
-  border-radius: 5px;
-  border: 1px solid #bbb;
-  cursor: pointer;
-  transition: border-color 0.3s ease;
-}
-
-.solicitacao select:hover,
-.solicitacao select:focus {
-  border-color: #3a86ff;
+.btn-excluir:hover,
+.btn-excluir:focus {
+  background-color: #a93226;
   outline: none;
 }
 
-/* Responsivo */
-@media (max-width: 500px) {
-  .form-grid {
+@media (max-width: 600px) {
+  .solicitacao, form {
     grid-template-columns: 1fr;
   }
 
-  .grid-solicitacoes {
-    grid-template-columns: 1fr;
+  form button {
+    grid-column: span 1;
   }
 }
