@@ -14,16 +14,17 @@
   </header>
 
   <main class="container">
-    <h2>Solicitações de Pedidos</h2>
+    <h2 class="titulo">Solicitações de Pedidos</h2>
 
-    <section id="lista-solicitacoes">
+    <section id="lista-solicitacoes" class="grid-solicitacoes">
       <!-- Solicitações aparecerão aqui -->
     </section>
 
     <button class="add-btn" onclick="mostrarFormulario()">Nova Solicitação</button>
 
     <form id="form-solicitacao" class="hidden">
-      <input type="text" placeholder="Descrição do item" id="descricao" required>
+      <input type="text" placeholder="Item" id="item" required>
+      <input type="text" placeholder="Descrição" id="descricao" required>
       <input type="number" placeholder="Quantidade" id="quantidade" required>
       <input type="date" placeholder="Data da Solicitação" id="data" required>
       <input type="date" placeholder="Previsão de Entrega" id="previsao" required>
