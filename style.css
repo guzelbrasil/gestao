@@ -34,7 +34,7 @@ header {
   display: block;
   margin: 20px auto;
   padding: 10px 24px;
-  background-color: #1e88e5;
+  background-color: #106962;
   color: white;
   border: none;
   border-radius: 8px;
@@ -43,7 +43,7 @@ header {
 }
 
 .add-btn:hover {
-  background-color: #1565c0;
+  background-color: #0a5044;
 }
 
 form {
