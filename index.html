@@ -54,35 +54,33 @@
 
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
+
     const lista = document.getElementById('lista-solicitacoes');
     const form = document.getElementById('form-solicitacao');
 
+    // Exibe/esconde o formulário
     window.mostrarFormulario = function () {
       form.classList.toggle('hidden');
     }
 
+    // Formata data ISO para dd-mm-aaaa
     function formatarData(dataISO) {
+      if (!dataISO) return '';
       const partes = dataISO.split("-");
       return `${partes[2]}-${partes[1]}-${partes[0]}`;
     }
 
+    // Envia nova solicitação
     form.addEventListener('submit', function (e) {
       e.preventDefault();
 
-      const item = document.getElementById('item').value;
-      const descricao = document.getElementById('descricao').value;
-      const quantidade = document.getElementById('quantidade').value;
-      const data = document.getElementById('data').value;
-      const previsao = document.getElementById('previsao').value;
-      const status = document.getElementById('status').value;
-
       const novaSolicitacao = {
-        item,
-        descricao,
-        quantidade,
-        data,
-        previsao,
-        status
+        item: document.getElementById('item').value,
+        descricao: document.getElementById('descricao').value,
+        quantidade: document.getElementById('quantidade').value,
+        data: document.getElementById('data').value,
+        previsao: document.getElementById('previsao').value,
+        status: document.getElementById('status').value
       };
 
       push(ref(db, 'solicitacoes'), novaSolicitacao);
@@ -91,6 +89,7 @@
       form.classList.add('hidden');
     });
 
+    // Atualiza lista em tempo real
     onValue(ref(db, 'solicitacoes'), snapshot => {
       lista.innerHTML = '';
       const solicitacoes = snapshot.val();
