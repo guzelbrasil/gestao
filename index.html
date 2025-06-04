@@ -3,113 +3,62 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Solicitações de Pedidos</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="icon" href="logo.png" type="image/png" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <title>Gestão - Solicitações</title>
+
+  <!-- Fonte Poppins Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <header>
-    <img src="logo.png" alt="Logo Guzel" class="logo">
+    <img src="https://i.imgur.com/8QXv2QJ.png" alt="Logo Guzel" class="logo" />
+    <h1>Solicitações de Pedidos</h1>
   </header>
 
-  <main class="container">
-    <h2 class="titulo">Solicitações de Pedidos</h2>
+  <main>
+    <button id="btn-toggle-form" aria-expanded="false" aria-controls="form-solicitacao" onclick="mostrarFormulario()">+ Nova Solicitação</button>
 
-    <section id="lista-solicitacoes" class="grid-solicitacoes">
-      <!-- Solicitações aparecerão aqui -->
+    <form id="form-solicitacao" class="hidden" aria-label="Formulário de nova solicitação">
+      <div class="form-grid">
+        <label for="item">Item</label>
+        <input type="text" id="item" name="item" required />
+
+        <label for="descricao">Descrição</label>
+        <input type="text" id="descricao" name="descricao" required />
+
+        <label for="quantidade">Quantidade</label>
+        <input type="number" id="quantidade" name="quantidade" min="1" required />
+
+        <label for="data">Data da Solicitação</label>
+        <input type="date" id="data" name="data" required />
+
+        <label for="previsao">Previsão de Entrega</label>
+        <input type="date" id="previsao" name="previsao" required />
+
+        <label for="status">Status</label>
+        <select id="status" name="status" required>
+          <option value="Pendente" selected>Pendente</option>
+          <option value="Concluído">Concluído</option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn-submit">Salvar Solicitação</button>
+    </form>
+
+    <section class="lista-section">
+      <h2>Solicitações Pendentes</h2>
+      <div id="lista-solicitacoes-pendentes" class="grid-solicitacoes" aria-live="polite"></div>
     </section>
 
-    <button class="add-btn" onclick="mostrarFormulario()">Nova Solicitação</button>
-
-    <form id="form-solicitacao" class="hidden">
-      <input type="text" placeholder="Item" id="item" required>
-      <input type="text" placeholder="Descrição" id="descricao" required>
-      <input type="number" placeholder="Quantidade" id="quantidade" required>
-      <input type="date" id="data" required>
-      <input type="date" id="previsao" required>
-      <select id="status">
-        <option value="Pendente">Pendente</option>
-        <option value="Entregue">Entregue</option>
-      </select>
-      <button type="submit" class="save-btn">Salvar</button>
-    </form>
+    <section class="lista-section">
+      <h2>Histórico de Solicitações Concluídas</h2>
+      <div id="lista-solicitacoes-concluidas" class="grid-solicitacoes" aria-live="polite"></div>
+    </section>
   </main>
 
-  <!-- Firebase App e Database com módulos -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyAr8neQIrg-jfF9rxWdyqCkhsHMlMQA7jM",
-      authDomain: "gestao-d2d90.firebaseapp.com",
-      projectId: "gestao-d2d90",
-      storageBucket: "gestao-d2d90.appspot.com",
-      messagingSenderId: "658884471287",
-      appId: "1:658884471287:web:0e391bc3cf740f4fcce6f2",
-      measurementId: "G-CLW51ED6H6",
-      databaseURL: "https://gestao-d2d90-default-rtdb.firebaseio.com"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
-
-    const lista = document.getElementById('lista-solicitacoes');
-    const form = document.getElementById('form-solicitacao');
-
-    // Exibe/esconde o formulário
-    window.mostrarFormulario = function () {
-      form.classList.toggle('hidden');
-    }
-
-    // Formata data ISO para dd-mm-aaaa
-    function formatarData(dataISO) {
-      if (!dataISO) return '';
-      const partes = dataISO.split("-");
-      return `${partes[2]}-${partes[1]}-${partes[0]}`;
-    }
-
-    // Envia nova solicitação
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-
-      const novaSolicitacao = {
-        item: document.getElementById('item').value,
-        descricao: document.getElementById('descricao').value,
-        quantidade: document.getElementById('quantidade').value,
-        data: document.getElementById('data').value,
-        previsao: document.getElementById('previsao').value,
-        status: document.getElementById('status').value
-      };
-
-      push(ref(db, 'solicitacoes'), novaSolicitacao);
-
-      form.reset();
-      form.classList.add('hidden');
-    });
-
-    // Atualiza lista em tempo real
-    onValue(ref(db, 'solicitacoes'), snapshot => {
-      lista.innerHTML = '';
-      const solicitacoes = snapshot.val();
-
-      if (solicitacoes) {
-        Object.entries(solicitacoes).forEach(([id, dados]) => {
-          const div = document.createElement('div');
-          div.className = 'solicitacao';
-          div.innerHTML = `
-            <p><strong>Item:</strong> ${dados.item}</p>
-            <p><strong>Descrição:</strong> ${dados.descricao}</p>
-            <p><strong>Quantidade:</strong> ${dados.quantidade}</p>
-            <p><strong>Data da Solicitação:</strong> ${formatarData(dados.data)}</p>
-            <p><strong>Previsão de Entrega:</strong> ${formatarData(dados.previsao)}</p>
-            <p><strong>Status:</strong> ${dados.status}</p>
-          `;
-          lista.appendChild(div);
-        });
-      }
-    });
-  </script>
+  <!-- Script Firebase e app -->
+  <script type="module" src="app.js"></script>
 </body>
 </html>
