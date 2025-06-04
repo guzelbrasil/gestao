@@ -35,7 +35,27 @@
       <button type="submit" class="save-btn">Salvar</button>
     </form>
   </main>
+<!-- Firebase App (core SDK) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
 
+<!-- Firebase Realtime Database -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js"></script>
+
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyAr8neQIrg-jfF9rxWdyqCkhsHMlMQA7jM",
+    authDomain: "gestao-d2d90.firebaseapp.com",
+    projectId: "gestao-d2d90",
+    storageBucket: "gestao-d2d90.appspot.com",
+    messagingSenderId: "658884471287",
+    appId: "1:658884471287:web:0e391bc3cf740f4fcce6f2",
+    measurementId: "G-CLW51ED6H6",
+    databaseURL: "https://gestao-d2d90-default-rtdb.firebaseio.com"
+  };
+
+  // Inicializa o Firebase
+  firebase.initializeApp(firebaseConfig);
+</script>
   <script src="script.js"></script>
 </body>
 </html>
