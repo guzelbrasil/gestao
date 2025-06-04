@@ -12,7 +12,7 @@ header {
   background: transparent;
   color: #333;
   padding: 0.5rem 1rem;
-  text-align: left;
+  text-align: center;
   font-size: 1.2rem;
   font-weight: 500;
 }
@@ -74,7 +74,7 @@ form {
 
 form input, form select {
   padding: 0.5rem;
-  border: 1px solid #ccc;
+  border: 1px solid #158897;
   border-radius: 8px;
   font-size: 0.9rem;
   width: 100%;
