@@ -40,7 +40,7 @@ main {
 }
 
 button#btn-toggle-form {
-  background-color: #3a86ff;
+  background-color: #278caa;
   color: white;
   border: none;
   border-radius: 6px;
@@ -53,7 +53,7 @@ button#btn-toggle-form {
 
 button#btn-toggle-form:hover,
 button#btn-toggle-form:focus {
-  background-color: #265dcc;
+  background-color: #1f6b83;
   outline: none;
 }
 
@@ -99,7 +99,7 @@ input[type="text"]:focus,
 input[type="number"]:focus,
 input[type="date"]:focus,
 select:focus {
-  border-color: #3a86ff;
+  border-color: #278caa;
   outline: none;
 }
 
