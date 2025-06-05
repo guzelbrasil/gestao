@@ -1,64 +1,61 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Gestão - Solicitações</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Gestão - Solicitações</title>
 
-  <!-- Fonte Poppins Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-  <!-- CSS -->
-  <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header>
-    <img src="logo.png" alt="Logo Guzel" class="logo">
-    <h1>Solicitações</h1>
-  </header>
+    <header>
+        <img src="logo.png" alt="Logo Guzel" class="logo">
+        <h1>Solicitações</h1>
+    </header>
 
-  <main>
-    <button id="btn-toggle-form" aria-expanded="false" aria-controls="form-solicitacao" onclick="mostrarFormulario()">+ Nova Solicitação</button>
+    <main>
+        <button id="btn-toggle-form" class="botao-formulario" aria-expanded="false" aria-controls="form-solicitacao" onclick="mostrarFormulario()">+ Nova Solicitação</button>
 
-    <form id="form-solicitacao" class="hidden" aria-label="Formulário de nova solicitação">
-      <div class="form-grid">
-        <label for="item">Item</label>
-        <input type="text" id="item" name="item" required />
+        <form id="form-solicitacao" class="hidden" aria-label="Formulário de nova solicitação">
+            <div class="form-grid">
+                <label for="item">Item</label>
+                <input type="text" id="item" name="item" required />
 
-        <label for="descricao">Descrição</label>
-        <input type="text" id="descricao" name="descricao" required />
+                <label for="descricao">Descrição</label>
+                <input type="text" id="descricao" name="descricao" required />
 
-        <label for="quantidade">Quantidade</label>
-        <input type="number" id="quantidade" name="quantidade" min="1" required />
+                <label for="quantidade">Quantidade</label>
+                <input type="number" id="quantidade" name="quantidade" min="1" required />
 
-        <label for="data">Data da Solicitação</label>
-        <input type="date" id="data" name="data" required />
+                <label for="data">Data da Solicitação</label>
+                <input type="date" id="data" name="data" required />
 
-        <label for="previsao">Previsão de Entrega</label>
-        <input type="date" id="previsao" name="previsao" required />
+                <label for="previsao">Previsão de Entrega</label>
+                <input type="date" id="previsao" name="previsao" required />
 
-        <label for="status">Status</label>
-        <select id="status" name="status" required>
-          <option value="Pendente" selected>Pendente</option>
-          <option value="Concluído">Concluído</option>
-        </select>
-      </div>
+                <label for="status">Status</label>
+                <select id="status" name="status" required>
+                    <option value="Pendente" selected>Pendente</option>
+                    <option value="Concluído">Concluído</option>
+                </select>
+            </div>
 
-      <button type="submit" class="btn-submit">Salvar Solicitação</button>
-    </form>
+            <button type="submit" class="save-btn">Salvar Solicitação</button>
+        </form>
 
-    <section class="lista-section">
-      <h2>Solicitações Pendentes</h2>
-      <div id="lista-solicitacoes-pendentes" class="grid-solicitacoes" aria-live="polite"></div>
-    </section>
+        <section class="secao">
+            <h2>Solicitações Pendentes</h2>
+            <div id="lista-solicitacoes-pendentes" class="grid-solicitacoes" aria-live="polite"></div>
+        </section>
 
-    <section class="lista-section">
-      <h2>Histórico de Solicitações Concluídas</h2>
-      <div id="lista-solicitacoes-concluidas" class="grid-solicitacoes" aria-live="polite"></div>
-    </section>
-  </main>
+        <section class="secao">
+            <h2>Histórico de Solicitações Concluídas</h2>
+            <div id="lista-solicitacoes-concluidas" class="grid-solicitacoes" aria-live="polite"></div>
+        </section>
+    </main>
 
-  <!-- Script Firebase e app -->
-  <script type="module" src="script.js"></script>
+    <script type="module" src="script.js"></script>
 </body>
 </html>
