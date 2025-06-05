@@ -1,43 +1,73 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap'); /* Adicionei pesos que podem ser úteis */
 
 body {
-  font-family: 'Poppins';
-  margin: 0;
-  padding: 0;
-  background: #f4f4f4;
-  color: #333;
+  font-family: 'Poppins', sans-serif; /* Consistência com o Poppins e fallback */
+  background-color: #f9f9f9; /* Mesma cor de fundo do estoque */
+  color: #222; /* Mesma cor de texto principal */
+  padding: 1rem;
+  min-height: 100vh;
+  display: flex; /* Para centralizar o conteúdo principal */
+  flex-direction: column;
+  align-items: center; /* Centraliza horizontalmente */
+  margin: 0; /* Garante que não há margens padrão do navegador */
 }
 
 header {
-  background: transparent;
-  color: #333;
-  padding: 0.5rem 1rem;
+  /* Mesmos estilos do cabeçalho de estoque para consistência */
   text-align: center;
-  font-size: 1.2rem;
-  font-weight: 500;
+  margin-bottom: 2rem;
+  width: 100%;
+  max-width: 900px; /* Mesma largura máxima do estoque */
+  /* Remove background, color e padding extras aqui para seguir o estoque */
+}
+
+/* Adicione a classe .logo e h1/h2 do estoque para consistência na logo */
+.logo {
+  height: 60px; /* Ajuste se a sua logo tiver um tamanho diferente, mas mantive o padrão do estoque */
+  margin-bottom: 0.5rem;
+}
+
+h1 {
+  font-weight: 600;
+  font-size: 1.8rem;
+  color: #2b2b2b;
+}
+
+h2 {
+  /* No estoque, h2 é para a categoria, aqui pode ser para "Solicitações Pendentes" */
+  font-size: 1.6rem; /* Aumentado para corresponder ao estoque */
+  color: #187a81; /* Mesma cor do estoque */
+  cursor: pointer; /* Mantido se houver interatividade */
+  margin: 0 0 1rem 0; /* Ajuste de margem inferior */
+  border-bottom: none; /* Remove a linha, se não quiser, ou ajuste para combinar */
+  padding-bottom: 0;
 }
 
 main {
   padding: 1rem;
-  max-width: 1200px;
-  margin: 0 auto;
+  width: 100%; /* Ocupa a largura total dentro do alinhamento do body */
+  max-width: 900px; /* Limita o conteúdo principal à mesma largura do estoque */
+  margin: 0 auto; /* Mantido para centralização se o body não for flex */
+  /* Com `body` como flex e `align-items: center`, `max-width` e `width: 100%` em `main` são suficientes */
 }
 
 .secao {
   margin-bottom: 2rem;
+  background-color: #fff; /* Adiciona fundo branco para as seções */
+  padding: 16px; /* Adiciona padding */
+  border-radius: 12px; /* Adiciona bordas arredondadas */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* Adiciona sombra */
+  width: 100%; /* Garante que a seção ocupe a largura total */
+  box-sizing: border-box; /* Inclui padding e border na largura */
 }
 
-.secao h2 {
-  font-size: 1.2rem;
-  color: #1a1a1a;
-  margin-bottom: 1rem;
-  border-bottom: 2px solid #ccc;
-  padding-bottom: 0.5rem;
-}
+/* O .secao h2 já foi ajustado acima para seguir o padrão */
+/* .secao h2 { ... } */
 
 .grid-solicitacoes {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  /* Por padrão, 1 coluna para mobile */
+  grid-template-columns: 1fr;
   gap: 1rem;
 }
 
@@ -47,6 +77,7 @@ main {
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: box-shadow 0.2s;
+  box-sizing: border-box; /* Garante que padding não afete a largura */
 }
 
 .solicitacao:focus-within {
@@ -57,7 +88,9 @@ main {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
-label, select, input {
+label,
+select,
+input {
   font-family: inherit;
 }
 
@@ -69,88 +102,4 @@ form {
   background: white;
   padding: 1rem;
   border-radius: 10px;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-}
-
-form input, form select {
-  padding: 0.5rem;
-  border: 1px solid #158897;
-  border-radius: 8px;
-  font-size: 0.9rem;
-  width: 100%;
-}
-
-form button {
-  background: #158897;
-  color: white;
-  border: none;
-  padding: 0.75rem 1rem;
-  font-size: 1rem;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  grid-column: span 3;
-}
-
-form button:hover {
-  background: #106672;
-}
-
-.botao-formulario {
-  display: block;
-  margin-bottom: 1rem;
-  background: #158897;
-  color: white;
-  border: none;
-  padding: 0.75rem 1.2rem;
-  font-size: 1rem;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.botao-formulario:hover {
-  background: #106672;
-}
-
-.hidden {
-  display: none;
-}
-
-.status-select {
-  margin-top: 0.5rem;
-  width: 100%;
-  padding: 0.4rem;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  font-size: 0.9rem;
-}
-
-/* ✅ Botão de exclusão */
-.btn-excluir {
-  background-color: #c0392b;
-  color: white;
-  border: none;
-  padding: 0.4rem 0.8rem;
-  font-size: 0.85rem;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  margin-top: 0.6rem;
-}
-
-.btn-excluir:hover,
-.btn-excluir:focus {
-  background-color: #a93226;
-  outline: none;
-}
-
-@media (max-width: 600px) {
-  .solicitacao, form {
-    grid-template-columns: 1fr;
-  }
-
-  form button {
-    grid-column: span 1;
-  }
-}
+  box-shadow: 0 1px
