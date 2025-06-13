@@ -88,9 +88,8 @@ function excluirSolicitacao(id) {
   }
 }
 
-// NOVO: Função para preencher o formulário para edição
 function preencherFormularioParaEdicao(id) {
-    const dados = allSolicitacoesData[id]; // Pega os dados do objeto armazenado
+    const dados = allSolicitacoesData[id];
 
     if (!dados) {
         console.error("Dados da solicitação não encontrados para o ID:", id);
@@ -117,19 +116,19 @@ function preencherFormularioParaEdicao(id) {
 onValue(ref(db, 'solicitacoes'), snapshot => {
   listaPendentes.innerHTML = '';
   listaConcluidas.innerHTML = '';
-  allSolicitacoesData = {}; // Limpa e preenche o objeto a cada atualização
+  allSolicitacoesData = {};
 
   const solicitacoes = snapshot.val();
 
   if (solicitacoes) {
     Object.entries(solicitacoes).forEach(([id, dados]) => {
-      allSolicitacoesData[id] = dados; // Armazena os dados para fácil acesso
+      allSolicitacoesData[id] = dados;
 
       const div = document.createElement('div');
       div.className = 'solicitacao';
       div.tabIndex = 0;
       div.innerHTML = `
-        <p><strong class="item-destaque">Item - ${dados.item}</strong></p> <p><strong>Descrição:</strong> ${dados.descricao}</p>
+        <p><strong class="item-destaque"><span class="ocultar-label-item">Item - </span>${dados.item}</strong></p> <p><strong>Descrição:</strong> ${dados.descricao}</p>
         <p><strong>Quantidade:</strong> ${dados.quantidade}</p>
         <p><strong>Data da Solicitação:</strong> ${formatarData(dados.data)}</p>
         <p><strong>Previsão de Entrega:</strong> ${formatarData(dados.previsao)}</p>
@@ -141,28 +140,26 @@ onValue(ref(db, 'solicitacoes'), snapshot => {
           </select>
         </div>
         <div class="botoes-acao">
-          <button class="btn-editar" data-id="${id}">Editar</button> <button class="btn-excluir" data-id="${id}">Excluir</button> </div>
+          <button class="btn-editar" data-id="${id}">Editar</button>
+          <button class="btn-excluir" data-id="${id}">Excluir</button>
+        </div>
       `;
 
-      // Event Listeners adicionados após o elemento ser criado
       div.querySelector('.status-select').addEventListener('change', e => {
         const novoStatus = e.target.value;
         const idSolicitacao = e.target.getAttribute('data-id');
         atualizarStatus(idSolicitacao, novoStatus);
       });
 
-      // NOVO: Adiciona Event Listener para o botão Editar via delegação de evento
       div.querySelector('.btn-editar').addEventListener('click', e => {
         const idSolicitacao = e.target.getAttribute('data-id');
         preencherFormularioParaEdicao(idSolicitacao);
       });
 
-      // NOVO: Adiciona Event Listener para o botão Excluir via delegação de evento
       div.querySelector('.btn-excluir').addEventListener('click', e => {
         const idSolicitacao = e.target.getAttribute('data-id');
         excluirSolicitacao(idSolicitacao);
       });
-
 
       if (dados.status === 'Concluído') {
         listaConcluidas.appendChild(div);
@@ -172,7 +169,3 @@ onValue(ref(db, 'solicitacoes'), snapshot => {
     });
   }
 });
-
-// Remove as declarações globais de excluirSolicitacao e editarSolicitacao
-// window.excluirSolicitacao = excluirSolicitacao;
-// window.editarSolicitacao = editarSolicitacao; // Esta função agora não é mais global, mas chamada internamente
