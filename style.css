@@ -105,7 +105,7 @@ main {
     margin-bottom: 0.2rem;
 }
 
-/* NOVO: Ocultar a label "Item -" dentro das solicitações */
+/* Ocultar a label "Item -" dentro das solicitações */
 .ocultar-label-item {
     display: none;
 }
@@ -178,50 +178,45 @@ main {
 }
 
 
-/* --- Formulário de Nova Solicitação --- */
+/* --- Formulário de Nova Solicitação (TOTALMENTE REESTRUTURADO PARA CENTRALIZAÇÃO) --- */
 form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
+    display: grid; /* O FORM é agora o GRID container principal */
+    grid-template-columns: 1fr; /* Padrão: uma coluna para mobile */
+    gap: 1rem; /* Espaçamento entre os itens do grid */
     margin-bottom: 2rem;
     background: white;
-    padding: 1rem;
+    padding: 1.5rem; /* Aumentei o padding para melhor visual */
     border-radius: 10px;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
     width: 100%;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
+    max-width: 500px; /* Largura máxima padrão para o formulário */
+    margin-left: auto; /* Centraliza o formulário na página */
+    margin-right: auto; /* Centraliza o formulário na página */
 }
 
-.form-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem;
-    width: 100%;
-    max-width: 400px;
-}
+/* REMOVIDO: .form-grid não existe mais */
 
 form label {
-    text-align: center;
+    text-align: center; /* Centraliza o texto das labels */
+    font-weight: 500; /* Levemente mais negrito para as labels */
+    margin-bottom: -0.5rem; /* Puxa a label um pouco mais perto do input */
 }
 
 form input,
 form select {
-    padding: 0.7rem;
+    padding: 0.8rem; /* Aumentei o padding para os campos */
     border: 1px solid #158897;
     border-radius: 8px;
     font-size: 1rem;
-    width: 100%;
+    width: 100%; /* Ocupa 100% da célula do grid */
     box-sizing: border-box;
 }
 
 form button.save-btn {
-    display: block;
-    margin: 1rem auto 0;
-    padding: 10px 25px;
+    display: block; /* Garante que margin: auto funcione */
+    margin: 1.5rem auto 0.5rem auto; /* Aumentei o margin-top */
+    padding: 12px 30px; /* Aumentei o padding para o botão */
     background-color: #187a81;
     color: white;
     border: none;
@@ -230,8 +225,9 @@ form button.save-btn {
     font-size: 1.1rem;
     cursor: pointer;
     transition: background-color 0.3s;
-    width: fit-content;
-    max-width: 320px;
+    /* Para centralizar o botão no grid, ele precisa ocupar todas as colunas */
+    grid-column: 1 / -1; /* Ocupa de ponta a ponta na sua linha do grid */
+    max-width: 350px; /* Limita a largura do botão para não ficar muito largo */
 }
 
 form button.save-btn:hover {
@@ -268,13 +264,27 @@ form button.save-btn:hover {
         grid-template-columns: repeat(2, 1fr);
     }
     
-    .form-grid {
-        grid-template-columns: repeat(2, 1fr);
-        max-width: 600px;
+    /* Formulário em 2 colunas para telas médias */
+    form {
+        grid-template-columns: repeat(2, 1fr); /* 2 colunas */
+        max-width: 700px; /* Aumenta a largura do formulário */
     }
+    form label {
+        text-align: right; /* Alinha labels à direita quando em 2 colunas */
+    }
+    /* Faz o input começar na segunda coluna e ocupar uma */
+    form input,
+    form select {
+        grid-column: 2 / 3;
+    }
+    /* Faz a label começar na primeira coluna e ocupar uma */
+    form label[for] { /* Seletor mais específico para labels associadas a inputs */
+        grid-column: 1 / 2;
+    }
+    /* Faz o botão de salvar ocupar as duas colunas */
     form button.save-btn {
-        width: auto;
-        max-width: 400px;
+        grid-column: 1 / -1; /* Ocupa de ponta a ponta */
+        max-width: 400px; /* Pode ser um pouco mais largo em telas médias */
     }
 }
 
@@ -283,12 +293,28 @@ form button.save-btn:hover {
         grid-template-columns: repeat(3, 1fr);
     }
     
-    .form-grid {
-        grid-template-columns: repeat(3, 1fr);
-        max-width: 700px;
+    /* Formulário em 3 colunas para telas grandes */
+    form {
+        grid-template-columns: repeat(3, 1fr); /* 3 colunas */
+        max-width: 850px; /* Aumenta ainda mais a largura do formulário */
     }
+    /* Continua alinhando labels à direita */
+    form label {
+        text-align: right;
+    }
+    /* Campos ocupam a segunda coluna */
+    form input,
+    form select {
+        grid-column: 2 / 3;
+    }
+    /* Labels ocupam a primeira coluna */
+    form label[for] {
+        grid-column: 1 / 2;
+    }
+    /* Botão de salvar ocupa todas as 3 colunas */
     form button.save-btn {
-        max-width: 500px;
+        grid-column: 1 / -1; /* Ocupa de ponta a ponta */
+        max-width: 500px; /* Pode ser mais largo em telas grandes */
     }
 }
 
@@ -297,8 +323,24 @@ form button.save-btn:hover {
         grid-template-columns: 1fr;
     }
 
-    .form-grid {
-        max-width: 300px;
+    /* Formulário em 1 coluna para mobile */
+    form {
+        grid-template-columns: 1fr; /* Garante 1 coluna */
+        max-width: 350px; /* Limita a largura do formulário para mobile */
+    }
+    form label {
+        text-align: center; /* Centraliza labels em mobile */
+    }
+    form input,
+    form select {
+        grid-column: auto; /* Reseta o grid-column para 1 coluna */
+    }
+    form label[for] {
+        grid-column: auto; /* Reseta o grid-column para 1 coluna */
+    }
+    form button.save-btn {
+        grid-column: 1 / -1; /* Ocupa a largura total da coluna */
+        max-width: 280px; /* Limita a largura do botão em mobile */
     }
 
     .botao-formulario {

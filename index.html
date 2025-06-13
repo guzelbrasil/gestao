@@ -20,28 +20,26 @@
     <main> <button id="btn-toggle-form" class="botao-formulario" aria-expanded="false" aria-controls="form-solicitacao" onclick="mostrarFormulario()">+ Nova Solicitação</button>
 
         <form id="form-solicitacao" class="hidden" aria-label="Formulário de nova solicitação">
-            <div class="form-grid">
-                <label for="item">Item</label>
-                <input type="text" id="item" name="item" required />
+            <label for="item">Item</label>
+            <input type="text" id="item" name="item" required />
 
-                <label for="descricao">Descrição</label>
-                <input type="text" id="descricao" name="descricao" required />
+            <label for="descricao">Descrição</label>
+            <input type="text" id="descricao" name="descricao" required />
 
-                <label for="quantidade">Quantidade</label>
-                <input type="number" id="quantidade" name="quantidade" min="1" required />
+            <label for="quantidade">Quantidade</label>
+            <input type="number" id="quantidade" name="quantidade" min="1" required />
 
-                <label for="data">Data da Solicitação</label>
-                <input type="date" id="data" name="data" required />
+            <label for="data">Data da Solicitação</label>
+            <input type="date" id="data" name="data" required />
 
-                <label for="previsao">Previsão de Entrega</label>
-                <input type="date" id="previsao" name="previsao" required />
+            <label for="previsao">Previsão de Entrega</label>
+            <input type="date" id="previsao" name="previsao" required />
 
-                <label for="status">Status</label>
-                <select id="status" name="status" required>
-                    <option value="Pendente" selected>Pendente</option>
-                    <option value="Concluído">Concluído</option>
-                </select>
-            </div>
+            <label for="status">Status</label>
+            <select id="status" name="status" required>
+                <option value="Pendente" selected>Pendente</option>
+                <option value="Concluído">Concluído</option>
+            </select>
 
             <button type="submit" class="save-btn">Salvar Solicitação</button>
         </form>
