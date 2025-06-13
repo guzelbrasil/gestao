@@ -18,10 +18,9 @@ const db = getDatabase(app);
 const listaPendentes = document.getElementById('lista-solicitacoes-pendentes');
 const listaConcluidas = document.getElementById('lista-solicitacoes-concluidas');
 const form = document.getElementById('form-solicitacao');
-const btnToggleForm = document.getElementById('btn-toggle-form'); // Adicionado
-const saveButton = form.querySelector('.save-btn'); // Adicionado para referência
+const btnToggleForm = document.getElementById('btn-toggle-form');
+const saveButton = form.querySelector('.save-btn');
 
-// Novas referências para os campos do formulário para facilitar o preenchimento na edição
 const itemInput = document.getElementById('item');
 const descricaoInput = document.getElementById('descricao');
 const quantidadeInput = document.getElementById('quantidade');
@@ -30,15 +29,16 @@ const previsaoInput = document.getElementById('previsao');
 const statusInput = document.getElementById('status');
 
 let currentEditingId = null; // Variável para armazenar o ID da solicitação sendo editada
+let allSolicitacoesData = {}; // Objeto para armazenar todos os dados das solicitações para fácil acesso na edição
 
 window.mostrarFormulario = function () {
   form.classList.toggle('hidden');
   const expanded = btnToggleForm.getAttribute('aria-expanded') === 'true';
   btnToggleForm.setAttribute('aria-expanded', String(!expanded));
   if (form.classList.contains('hidden')) {
-    form.reset(); // Limpa o formulário quando ele é ocultado
-    currentEditingId = null; // Reseta o ID de edição
-    saveButton.textContent = 'Salvar Solicitação'; // Volta o texto do botão
+    form.reset();
+    currentEditingId = null;
+    saveButton.textContent = 'Salvar Solicitação';
   }
 };
 
@@ -66,18 +66,16 @@ form.addEventListener('submit', e => {
   const solicitacaoData = { item, descricao, quantidade, data, previsao, status };
 
   if (currentEditingId) {
-    // Se estiver editando, atualiza a solicitação existente
     update(ref(db, 'solicitacoes/' + currentEditingId), solicitacaoData);
   } else {
-    // Se não estiver editando, cria uma nova solicitação
     push(ref(db, 'solicitacoes'), solicitacaoData);
   }
 
   form.reset();
   form.classList.add('hidden');
   btnToggleForm.setAttribute('aria-expanded', 'false');
-  currentEditingId = null; // Reseta o ID de edição
-  saveButton.textContent = 'Salvar Solicitação'; // Volta o texto do botão
+  currentEditingId = null;
+  saveButton.textContent = 'Salvar Solicitação';
 });
 
 function atualizarStatus(id, novoStatus) {
@@ -90,60 +88,81 @@ function excluirSolicitacao(id) {
   }
 }
 
-// Nova função para editar solicitação
-window.editarSolicitacao = function (id, dados) {
-  // Exibe o formulário se estiver oculto
-  if (form.classList.contains('hidden')) {
-    mostrarFormulario();
-  }
+// NOVO: Função para preencher o formulário para edição
+function preencherFormularioParaEdicao(id) {
+    const dados = allSolicitacoesData[id]; // Pega os dados do objeto armazenado
 
-  // Preenche o formulário com os dados da solicitação
-  itemInput.value = dados.item;
-  descricaoInput.value = dados.descricao;
-  quantidadeInput.value = dados.quantidade;
-  dataInput.value = dados.data;
-  previsaoInput.value = dados.previsao;
-  statusInput.value = dados.status;
+    if (!dados) {
+        console.error("Dados da solicitação não encontrados para o ID:", id);
+        return;
+    }
 
-  currentEditingId = id; // Armazena o ID da solicitação que está sendo editada
-  saveButton.textContent = 'Atualizar Solicitação'; // Altera o texto do botão para "Atualizar"
-  window.scrollTo({ top: 0, behavior: 'smooth' }); // Rola para o topo da página para o formulário
-};
+    if (form.classList.contains('hidden')) {
+        mostrarFormulario();
+    }
+
+    itemInput.value = dados.item;
+    descricaoInput.value = dados.descricao;
+    quantidadeInput.value = dados.quantidade;
+    dataInput.value = dados.data;
+    previsaoInput.value = dados.previsao;
+    statusInput.value = dados.status;
+
+    currentEditingId = id;
+    saveButton.textContent = 'Atualizar Solicitação';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
 
 onValue(ref(db, 'solicitacoes'), snapshot => {
   listaPendentes.innerHTML = '';
   listaConcluidas.innerHTML = '';
+  allSolicitacoesData = {}; // Limpa e preenche o objeto a cada atualização
 
   const solicitacoes = snapshot.val();
 
   if (solicitacoes) {
     Object.entries(solicitacoes).forEach(([id, dados]) => {
+      allSolicitacoesData[id] = dados; // Armazena os dados para fácil acesso
+
       const div = document.createElement('div');
       div.className = 'solicitacao';
       div.tabIndex = 0;
       div.innerHTML = `
-        <p><strong class="item-destaque">Item -</strong> ${dados.item}</p>
-        <p><strong>Descrição:</strong> ${dados.descricao}</p>
+        <p><strong class="item-destaque">Item - ${dados.item}</strong></p> <p><strong>Descrição:</strong> ${dados.descricao}</p>
         <p><strong>Quantidade:</strong> ${dados.quantidade}</p>
         <p><strong>Data da Solicitação:</strong> ${formatarData(dados.data)}</p>
         <p><strong>Previsão de Entrega:</strong> ${formatarData(dados.previsao)}</p>
-        <div class="status-container"> <strong>Status:</strong>
+        <div class="status-container">
+          <strong>Status:</strong>
           <select data-id="${id}" class="status-select" aria-label="Alterar status da solicitação ${dados.item}">
             <option value="Pendente" ${dados.status === 'Pendente' ? 'selected' : ''}>Pendente</option>
             <option value="Concluído" ${dados.status === 'Concluído' ? 'selected' : ''}>Concluído</option>
           </select>
         </div>
-        <div class="botoes-acao"> <button class="btn-editar" onclick="editarSolicitacao('${id}', ${JSON.stringify(dados).replace(/'/g, "\\'")})">Editar</button>
-          <button class="btn-excluir" onclick="excluirSolicitacao('${id}')">Excluir</button>
-        </div>
+        <div class="botoes-acao">
+          <button class="btn-editar" data-id="${id}">Editar</button> <button class="btn-excluir" data-id="${id}">Excluir</button> </div>
       `;
 
-      const select = div.querySelector('.status-select');
-      select.addEventListener('change', e => {
+      // Event Listeners adicionados após o elemento ser criado
+      div.querySelector('.status-select').addEventListener('change', e => {
         const novoStatus = e.target.value;
         const idSolicitacao = e.target.getAttribute('data-id');
         atualizarStatus(idSolicitacao, novoStatus);
       });
+
+      // NOVO: Adiciona Event Listener para o botão Editar via delegação de evento
+      div.querySelector('.btn-editar').addEventListener('click', e => {
+        const idSolicitacao = e.target.getAttribute('data-id');
+        preencherFormularioParaEdicao(idSolicitacao);
+      });
+
+      // NOVO: Adiciona Event Listener para o botão Excluir via delegação de evento
+      div.querySelector('.btn-excluir').addEventListener('click', e => {
+        const idSolicitacao = e.target.getAttribute('data-id');
+        excluirSolicitacao(idSolicitacao);
+      });
+
 
       if (dados.status === 'Concluído') {
         listaConcluidas.appendChild(div);
@@ -154,5 +173,6 @@ onValue(ref(db, 'solicitacoes'), snapshot => {
   }
 });
 
-window.excluirSolicitacao = excluirSolicitacao;
-// window.editarSolicitacao já está declarada no escopo global acima.
+// Remove as declarações globais de excluirSolicitacao e editarSolicitacao
+// window.excluirSolicitacao = excluirSolicitacao;
+// window.editarSolicitacao = editarSolicitacao; // Esta função agora não é mais global, mas chamada internamente
