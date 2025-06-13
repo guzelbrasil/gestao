@@ -29,7 +29,7 @@ header {
 }
 
 h1 {
-    font-weight: 700; /* Alterado para negrito (700) */
+    font-weight: 700; /* Negrito para o título principal */
     font-size: 1.8rem;
     color: #2b2b2b;
     margin-bottom: 0;
@@ -96,17 +96,16 @@ main {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
-/* NOVO/AJUSTADO: Destaque para o Item e seu conteúdo */
+/* Destaque para o Item e seu conteúdo */
 .item-destaque {
-    color: #187a81; /* Cor para destaque, pode ser ajustado */
-    font-weight: 700; /* Mais negrito */
-    font-size: 1.15em; /* Ligeiramente maior que o texto normal */
-    display: block; /* Garante que o strong ocupe a largura total do p */
-    margin-bottom: 0.2rem; /* Pequeno espaçamento abaixo do item */
+    color: #187a81;
+    font-weight: 700;
+    font-size: 1.15em;
+    display: block;
+    margin-bottom: 0.2rem;
 }
 
-
-/* NOVO: Alinhamento Status e Select */
+/* Alinhamento Status e Select */
 .status-container {
     display: flex;
     align-items: center;
@@ -127,8 +126,7 @@ main {
     font-size: 0.9rem;
 }
 
-
-/* NOVO: Estilo para o container de botões de ação */
+/* Estilo para o container de botões de ação */
 .botoes-acao {
     display: flex;
     justify-content: flex-end;
@@ -138,7 +136,7 @@ main {
     border-top: 1px solid #eee;
 }
 
-/* NOVO: Botão Editar */
+/* Botão Editar */
 .btn-editar {
     background-color: #3498db;
     color: white;
@@ -155,7 +153,6 @@ main {
     background-color: #2980b9;
     outline: none;
 }
-
 
 .btn-excluir {
     background-color: #c0392b;
@@ -175,39 +172,36 @@ main {
 }
 
 
-/* --- Formulário de Nova Solicitação --- */
+/* --- Formulário de Nova Solicitação (AJUSTADO PARA CENTRALIZAÇÃO) --- */
 form {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 1rem;
+    display: flex; /* Alterado para flexbox */
+    flex-direction: column; /* Coloca os filhos em coluna */
+    align-items: center; /* Centraliza os itens (form-grid e botão) horizontalmente */
+    gap: 1rem; /* Espaço entre form-grid e o botão */
     margin-bottom: 2rem;
     background: white;
     padding: 1rem;
     border-radius: 10px;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
-
-    /* Centralização do Formulário */
-    justify-content: center;
-    align-items: center;
     width: 100%;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-    grid-template-columns: 1fr;
+    max-width: 600px; /* Largura máxima para o formulário completo */
+    margin-left: auto; /* Centraliza o formulário na página */
+    margin-right: auto; /* Centraliza o formulário na página */
 }
 
-.form-grid {
+.form-grid { /* Este é o grid dos campos dentro do formulário */
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr; /* Por padrão, 1 coluna para responsividade */
     gap: 1rem;
+    width: 100%; /* Ocupa 100% da largura do formulário */
+    max-width: 400px; /* Limita a largura dos campos dentro do grid */
+    /* Removido margin: auto; display: block; aqui, pois o grid já gerencia */
 }
-
 
 form label {
     text-align: center;
 }
-
 
 form input,
 form select {
@@ -215,16 +209,14 @@ form select {
     border: 1px solid #158897;
     border-radius: 8px;
     font-size: 1rem;
-    width: calc(100% - 2px);
-    max-width: 300px;
-    margin: 0 auto;
-    display: block;
+    width: 100%; /* Ocupa 100% da célula do grid */
+    box-sizing: border-box; /* Garante que padding e border sejam incluídos na largura */
+    /* Removido max-width, margin: auto, display: block */
 }
 
-
 form button.save-btn {
-    display: block;
-    margin: 1rem auto 0;
+    display: block; /* Mantém block para margin auto funcionar */
+    margin: 1rem auto 0; /* Centraliza o botão */
     padding: 10px 25px;
     background-color: #187a81;
     color: white;
@@ -234,8 +226,8 @@ form button.save-btn {
     font-size: 1.1rem;
     cursor: pointer;
     transition: background-color 0.3s;
-    grid-column: span 1;
-    max-width: 320px;
+    width: fit-content; /* O botão terá a largura do seu conteúdo */
+    max-width: 320px; /* Limita a largura do botão para centralização */
 }
 
 form button.save-btn:hover {
@@ -271,29 +263,15 @@ form button.save-btn:hover {
     .grid-solicitacoes {
         grid-template-columns: repeat(2, 1fr);
     }
-    form {
-        grid-template-columns: repeat(2, 1fr);
-        max-width: 800px;
-    }
+    
+    /* Ajustes para o formulário em telas médias */
     .form-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    form label,
-    form input,
-    form select,
-    form button.save-btn {
-        max-width: none;
-        margin: unset;
-        display: unset;
+        grid-template-columns: repeat(2, 1fr); /* 2 colunas para campos */
+        max-width: 600px; /* Aumenta a largura dos campos para preencher o formulário */
     }
     form button.save-btn {
-        grid-column: span 2;
-        margin: 1rem auto 0;
-        display: block;
-    }
-    .status-container {
-        flex-direction: row;
-        align-items: center;
+        width: auto; /* Remove width: fit-content para poder ocupar mais espaço */
+        max-width: 400px; /* Limita a largura do botão de salvar para centralizar */
     }
 }
 
@@ -301,14 +279,14 @@ form button.save-btn:hover {
     .grid-solicitacoes {
         grid-template-columns: repeat(3, 1fr);
     }
-    form {
-        grid-template-columns: repeat(3, 1fr);
-    }
+    
+    /* Ajustes para o formulário em telas grandes */
     .form-grid {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(3, 1fr); /* 3 colunas para campos */
+        max-width: 700px; /* Pode aumentar um pouco mais para campos em 3 colunas */
     }
     form button.save-btn {
-        grid-column: span 3;
+        max-width: 500px; /* Permite que o botão seja um pouco maior */
     }
 }
 
@@ -317,17 +295,9 @@ form button.save-btn:hover {
         grid-template-columns: 1fr;
     }
 
-    form {
-        grid-template-columns: 1fr;
-    }
-
+    /* Em telas pequenas, form-grid já é 1 coluna por padrão */
     .form-grid {
-        grid-template-columns: 1fr;
-    }
-
-    form button.save-btn {
-        grid-column: span 1;
-        margin: 1rem auto 0;
+        max-width: 300px; /* Limita a largura dos campos para mobile */
     }
 
     .botao-formulario {
